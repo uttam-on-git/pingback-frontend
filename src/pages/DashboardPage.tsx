@@ -1,4 +1,5 @@
 import ComposeEmail from '../components/ComposeEmail';
+import SentEmailList from '../components/SentEmailsList';
 
 const DashboardPage = () => {
   return (
@@ -8,6 +9,7 @@ const DashboardPage = () => {
         <p>Welcome to your PingBack dashboard!</p>
       </div>
       <ComposeEmail />
+      <SentEmailList />
     </div>
   );
 };
