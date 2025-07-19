@@ -16,14 +16,17 @@ const ComposeEmail = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:3000/api/email/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_API_URL}/api/email/send`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ recipient, subject, body }),
         },
-        body: JSON.stringify({ recipient, subject, body }),
-      });
+      );
       const data = await response.json();
 
       if (!response.ok) {

@@ -1,6 +1,6 @@
 const LoginPage = () => {
   const handleClick = () => {
-    window.location.href = 'http://localhost:3000/api/auth/google';
+    window.location.href = `${import.meta.env.VITE_BACKEND_API_URL}/api/auth/google`;
   };
   return (
     <div className="flex flex-col items-center gap-4 rounded-lg bg-zinc-800 p-10 shadow-xl">

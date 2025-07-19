@@ -15,11 +15,14 @@ const SentEmailList = () => {
         return;
       }
       try {
-        const response = await fetch('http://localhost:3000/api/email', {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_API_URL}/api/email`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         if (!response.ok) {
           throw new Error('Failed to fetch emails.');
