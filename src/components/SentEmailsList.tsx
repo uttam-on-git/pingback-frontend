@@ -1,48 +1,35 @@
-import { useState, useEffect } from 'react';
 import type { TrackedEmail } from '../types';
 
-const SentEmailList = () => {
-  const [emails, setEmails] = useState<TrackedEmail[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface SentEmailsListProps {
+  emails: TrackedEmail[];
+  isLoading: boolean;
+  error: string | null;
+  onRefresh: () => void;
+  isRefreshing: boolean;
+}
 
-  useEffect(() => {
-    const fetchEmails = async () => {
-      const token = localStorage.getItem('auth-token');
-      if (!token) {
-        setError('You are not authenticated.');
-        setIsLoading(false);
-        return;
-      }
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_API_URL}/api/email`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
+const RefreshIcon = ({ isRefreshing }: { isRefreshing: boolean }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={`h-5 w-5 ${isRefreshing ? 'animate-spin' : ''}`}
+  >
+    <path
+      fillRule="evenodd"
+      d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-4.518a.75.75 0 00-.75.75v4.518l1.903-1.903a5.997 5.997 0 00-9.992 2.635a.75.75 0 01-1.49-.175a7.5 7.5 0 01.992-5.498zM19.245 13.941a7.5 7.5 0 01-12.548 3.364l-1.903-1.903h4.518a.75.75 0 00.75-.75v-4.518l-1.903 1.903a5.997 5.997 0 009.992-2.635a.75.75 0 011.49.175a7.5 7.5 0 01-.992 5.498z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch emails.');
-        }
-
-        const data: TrackedEmail[] = await response.json();
-        setEmails(data);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError('An unknown error occurred.');
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchEmails();
-  }, []);
-
+const SentEmailList = ({
+  emails,
+  isLoading,
+  error,
+  onRefresh,
+  isRefreshing,
+}: SentEmailsListProps) => {
   if (isLoading) {
     return <p className="text-zinc-400">Loading sent emails...</p>;
   }
@@ -53,7 +40,17 @@ const SentEmailList = () => {
 
   return (
     <div className="w-full max-w-4xl rounded-lg bg-zinc-800 p-8 shadow-lg">
-      <h2 className="mb-6 text-2xl font-bold text-white">Sent Emails</h2>
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-white">Sent Emails</h2>
+        <button
+          onClick={onRefresh}
+          disabled={isRefreshing}
+          className="flex items-center gap-2 rounded-lg bg-zinc-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-600 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <RefreshIcon isRefreshing={isRefreshing} />
+          {isRefreshing ? 'Refreshing...' : 'Refresh'}
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-sm text-zinc-300">
           <thead className="border-b border-zinc-600 text-xs uppercase text-zinc-400">

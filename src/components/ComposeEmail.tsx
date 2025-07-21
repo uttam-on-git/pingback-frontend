@@ -1,18 +1,25 @@
 import { useState } from 'react';
 
-const ComposeEmail = () => {
+interface ComposeEmailProps {
+  onEmailSent: () => void;
+}
+
+const ComposeEmail = ({ onEmailSent }: ComposeEmailProps) => {
   const [recipient, setRecipient] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatusMessage('Sending...');
+    setIsError(false);
 
     const token = localStorage.getItem('auth-token');
     if (!token) {
       setStatusMessage('Authentication error. Please log in again.');
+      setIsError(true);
       return;
     }
     try {
@@ -37,7 +44,11 @@ const ComposeEmail = () => {
       setRecipient('');
       setSubject('');
       setBody('');
+
+      // on success, trigger a refresh
+      onEmailSent();
     } catch (error) {
+      setIsError(true);
       if (error instanceof Error) {
         setStatusMessage(error.message);
       } else {
@@ -76,12 +87,19 @@ const ComposeEmail = () => {
         <button
           type="submit"
           className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white transition hover:bg-blue-700"
+          disabled={statusMessage === 'Sending...'}
         >
           Send
         </button>
       </form>
       {statusMessage && (
-        <p className="mt-4 text-center text-zinc-400">{statusMessage}</p>
+        <p
+          className={`mt-4 text-center ${
+            isError ? 'text-red-400' : 'text-green-400'
+          }`}
+        >
+          {statusMessage}
+        </p>
       )}
     </div>
   );

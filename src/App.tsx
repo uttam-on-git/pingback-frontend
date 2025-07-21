@@ -23,15 +23,25 @@ const PrivateRoute = ({
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem('auth-token');
     if (token) {
       setIsAuthenticated(true);
     }
+    setIsLoading(false);
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-zinc-900">
+        <p className="text-white">Loading...</p>
+      </div>
+    );
+  }
   return (
-    <div className="flex items-center justify-center h-screen bg-zinc-900">
+    <div className="min-h-screen bg-zinc-900 grid-background">
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />

@@ -1,1 +1,7 @@
 @import 'tailwindcss';
+.grid-background {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 2px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 2px);
+  background-size: 2rem 2rem;
+}
