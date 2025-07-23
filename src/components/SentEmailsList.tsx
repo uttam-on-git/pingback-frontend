@@ -46,7 +46,7 @@ const SentEmailList = ({
         <button
           onClick={onRefresh}
           disabled={isRefreshing}
-          className="flex items-center gap-2 rounded-lg bg-zinc-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-600 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex items-center cursor-pointer gap-2 rounded-lg bg-zinc-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <RefreshIcon isRefreshing={isRefreshing} />
           {isRefreshing ? 'Refreshing...' : 'Refresh'}

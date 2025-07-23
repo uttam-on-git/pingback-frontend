@@ -43,6 +43,7 @@ const LoginPage = () => {
           <ul className="mt-6 list-inside list-disc space-y-2 text-zinc-400">
             <li>Real-time open notifications</li>
             <li>Simple, clean dashboard</li>
+            <li>AI-powered subject suggestions</li>
             <li>Secure and private</li>
           </ul>
         </div>
