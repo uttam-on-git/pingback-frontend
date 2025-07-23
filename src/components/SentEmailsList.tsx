@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import type { TrackedEmail } from '../types';
 
 interface SentEmailsListProps {
@@ -78,16 +79,22 @@ const SentEmailList = ({
               </tr>
             ) : (
               emails.map((email) => (
-                <tr key={email.id} className="border-b border-zinc-700">
-                  <td className="px-6 py-4">{email.recipient}</td>
-                  <td className="px-6 py-4">{email.subject}</td>
-                  <td className="px-6 py-4">
-                    {new Date(email.createdAt).toLocaleString()}
-                  </td>
-                  <td className="px-6 py-4 text-center text-lg font-bold">
-                    {email._count.opens}
-                  </td>
-                </tr>
+                <Link
+                  to={`/email/${email.id}`}
+                  key={email.id}
+                  className="contents"
+                >
+                  <tr className="border-b border-zinc-700 transition hover:bg-zinc-700">
+                    <td className="px-6 py-4">{email.recipient}</td>
+                    <td className="px-6 py-4 font-medium">{email.subject}</td>
+                    <td className="px-6 py-4">
+                      {new Date(email.createdAt).toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 text-center text-lg font-bold">
+                      {email._count.opens}
+                    </td>
+                  </tr>
+                </Link>
               ))
             )}
           </tbody>

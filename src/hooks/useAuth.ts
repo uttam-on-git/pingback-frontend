@@ -13,7 +13,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     // first check for token
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('auth-token');
     if (token) {
       const decodedUser = jwtDecode<UserPayload>(token);
       setUser(decodedUser);

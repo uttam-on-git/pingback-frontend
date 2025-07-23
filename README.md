@@ -12,22 +12,22 @@ This repository contains the frontend client for **PingBack**, a simple yet powe
 
 ## ✨ Features
 
--   **Modern UI:** Built with React, TypeScript, and styled with Tailwind CSS for a beautiful and responsive user experience.
--   **Secure Authentication Flow:** Handles the client-side of the Google OAuth 2.0 flow, securely storing JWTs.
--   **Protected Routes:** Ensures that only authenticated users can access the main dashboard.
--   **Dynamic Components:** Includes components for composing emails and displaying a real-time list of sent emails and their open counts.
--   **Modular & Scalable:** Structured with a focus on reusable components and custom hooks for clean and maintainable code.
+- **Modern UI:** Built with React, TypeScript, and styled with Tailwind CSS for a beautiful and responsive user experience.
+- **Secure Authentication Flow:** Handles the client-side of the Google OAuth 2.0 flow, securely storing JWTs.
+- **Protected Routes:** Ensures that only authenticated users can access the main dashboard.
+- **Dynamic Components:** Includes components for composing emails and displaying a real-time list of sent emails and their open counts.
+- **Modular & Scalable:** Structured with a focus on reusable components and custom hooks for clean and maintainable code.
 
 ---
 
 ## 🛠️ Tech Stack
 
--   **Framework:** [React](https://reactjs.org/)
--   **Language:** [TypeScript](https://www.typescriptlang.org/)
--   **Build Tool:** [Vite](https://vitejs.dev/)
--   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
--   **Routing:** [React Router](https://reactrouter.com/)
--   **Code Quality:** [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/)
+- **Framework:** [React](https://reactjs.org/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Routing:** [React Router](https://reactrouter.com/)
+- **Code Quality:** [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/)
 
 ---
 
@@ -37,36 +37,38 @@ This section will guide you through setting up a local development environment.
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/) (v18 or later recommended)
--   A running instance of the [PingBack Backend](https://github.com/uttam-on-git/pingback-backend)
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- A running instance of the [PingBack Backend](https://github.com/uttam-on-git/pingback-backend)
 
 ### Installation & Setup
 
 1.  **Clone the repository:**
+
     ```bash
     git clone [https://github.com/uttam-on-git/pingback-frontend.git](https://github.com/uttam-on-git/pingback-frontend.git)
     cd pingback-frontend
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     npm install
     ```
 
 3.  **Set up environment variables:**
-    -   In the root of the project, create a new file named `.env`.
-    -   Add the following variable, pointing to your local backend server:
-        ```env
-        VITE_BACKEND_API_URL="http://localhost:3000"
-        ```
+    - In the root of the project, create a new file named `.env`.
+    - Add the following variable, pointing to your local backend server:
+      ```env
+      VITE_BACKEND_API_URL="http://localhost:3000"
+      ```
 
 ### Running the Application
 
--   To start the development server with hot-reloading:
-    ```bash
-    npm run dev
-    ```
--   The application will be available at `http://localhost:5173` (or the next available port).
+- To start the development server with hot-reloading:
+  ```bash
+  npm run dev
+  ```
+- The application will be available at `http://localhost:5173` (or the next available port).
 
 ---
 
@@ -74,11 +76,11 @@ This section will guide you through setting up a local development environment.
 
 In the project directory, you can run:
 
--   `npm run dev`: Runs the app in development mode.
--   `npm run build`: Builds the app for production to the `dist` folder.
--   `npm run lint`: Lints the code for errors and warnings.
--   `npm run format`: Formats all files with Prettier.
--   `npm run preview`: Serves the production build locally for testing.
+- `npm run dev`: Runs the app in development mode.
+- `npm run build`: Builds the app for production to the `dist` folder.
+- `npm run lint`: Lints the code for errors and warnings.
+- `npm run format`: Formats all files with Prettier.
+- `npm run preview`: Serves the production build locally for testing.
 
 ---
 
@@ -86,9 +88,9 @@ In the project directory, you can run:
 
 The following variables need to be set in a `.env` file for the application to work correctly. Note the `VITE_` prefix is required by Vite to expose the variable to the frontend.
 
-| Variable             | Description                                       | Example                 |
-| :------------------- | :------------------------------------------------ | :---------------------- |
-| `VITE_BACKEND_API_URL` | The public URL of the backend API service.        | `http://localhost:3000` |
+| Variable               | Description                                | Example                 |
+| :--------------------- | :----------------------------------------- | :---------------------- |
+| `VITE_BACKEND_API_URL` | The public URL of the backend API service. | `http://localhost:3000` |
 
 ---
 

@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
 import type { JSX } from 'react';
+import EmailDetailsPage from './pages/EmailDetailsPage';
 
 const PrivateRoute = ({
   isAuthenticated,
@@ -58,6 +59,14 @@ function App() {
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
                 <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/email/:id"
+            element={
+              <PrivateRoute isAuthenticated={isAuthenticated}>
+                <EmailDetailsPage />
               </PrivateRoute>
             }
           />
