@@ -11,6 +11,7 @@ import DashboardPage from './pages/DashboardPage';
 import AuthCallbackPage from './pages/AuthCallbackPage';
 import type { JSX } from 'react';
 import EmailDetailsPage from './pages/EmailDetailsPage';
+import { Toaster } from 'react-hot-toast';
 
 const PrivateRoute = ({
   isAuthenticated,
@@ -43,6 +44,15 @@ function App() {
   }
   return (
     <div className="min-h-screen bg-zinc-900 grid-background">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+        }}
+      />
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />

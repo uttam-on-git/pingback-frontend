@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface ComposeEmailProps {
   onEmailSent: () => void;
@@ -8,53 +9,44 @@ const ComposeEmail = ({ onEmailSent }: ComposeEmailProps) => {
   const [recipient, setRecipient] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
-  const [statusMessage, setStatusMessage] = useState('');
-  const [isError, setIsError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatusMessage('Sending...');
-    setIsError(false);
 
     const token = localStorage.getItem('auth-token');
     if (!token) {
-      setStatusMessage('Authentication error. Please log in again.');
-      setIsError(true);
+      toast.error('Authentication error. Please log in again.');
       return;
     }
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_API_URL}/api/email/send`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ recipient, subject, body }),
+    const sendPromise = fetch(
+      `${import.meta.env.VITE_BACKEND_API_URL}/api/email/send`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
-      const data = await response.json();
-
+        body: JSON.stringify({ recipient, subject, body }),
+      },
+    ).then(async (response) => {
       if (!response.ok) {
+        const data = await response.json();
         throw new Error(data.message || 'Failed to send email.');
       }
-      setStatusMessage('Email sent successfully!');
-      // clear the form
-      setRecipient('');
-      setSubject('');
-      setBody('');
+      return response.json();
+    });
 
-      // on success, trigger a refresh
-      onEmailSent();
-    } catch (error) {
-      setIsError(true);
-      if (error instanceof Error) {
-        setStatusMessage(error.message);
-      } else {
-        setStatusMessage('An unknown error occurred.');
-      }
-    }
+    toast.promise(sendPromise, {
+      loading: 'Sending email...',
+      success: () => {
+        setRecipient('');
+        setSubject('');
+        setBody('');
+        onEmailSent();
+        return 'Email sent successfully!';
+      },
+      error: (err) => `Error: ${err.message}`,
+    });
   };
 
   return (
@@ -87,20 +79,10 @@ const ComposeEmail = ({ onEmailSent }: ComposeEmailProps) => {
         <button
           type="submit"
           className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white transition hover:bg-blue-700"
-          disabled={statusMessage === 'Sending...'}
         >
           Send
         </button>
       </form>
-      {statusMessage && (
-        <p
-          className={`mt-4 text-center ${
-            isError ? 'text-red-400' : 'text-green-400'
-          }`}
-        >
-          {statusMessage}
-        </p>
-      )}
     </div>
   );
 };
