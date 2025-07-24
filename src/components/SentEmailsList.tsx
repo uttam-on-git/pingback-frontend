@@ -40,7 +40,7 @@ const SentEmailList = ({
   }
 
   return (
-    <div className="w-full max-w-4xl rounded-lg bg-zinc-800 p-8 shadow-lg">
+    <div className="w-full max-w-4xl rounded-lg bg-neutral-950 p-8 shadow-lg">
       <div className="mb-6 flex items-center justify-between">
         <h2 className="text-2xl font-bold text-white">Sent Emails</h2>
         <button

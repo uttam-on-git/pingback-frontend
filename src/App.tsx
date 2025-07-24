@@ -43,7 +43,7 @@ function App() {
     );
   }
   return (
-    <div className="min-h-screen bg-zinc-900 grid-background">
+    <div className="min-h-screen bg-zinc-900 network-grid">
       <Toaster
         position="top-center"
         toastOptions={{
