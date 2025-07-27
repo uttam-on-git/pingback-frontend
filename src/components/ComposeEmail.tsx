@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import type { $ZodIssueBase } from '../types';
 
 const SparklesIcon = () => (
   <svg
@@ -9,9 +10,9 @@ const SparklesIcon = () => (
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className="lucide lucide-wand-sparkles-icon lucide-wand-sparkles"
   >
     <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72" />
@@ -98,14 +99,17 @@ const ComposeEmail = ({ onEmailSent }: ComposeEmailProps) => {
       },
     ).then(async (response) => {
       if (!response.ok) {
-        const errorData = await response.json();
-        if (errorData.issues && Array.isArray(errorData.issues)) {
-          const errorMessages = errorData.issues.map(
-            (issue: { message: string }) => issue.message,
-          );
-          throw new Error(errorMessages.join(', '));
+        const data = await response.json();
+
+        // checks if the error response is the array of issues
+        if (Array.isArray(data)) {
+          const errorMessages = data
+            .map((issue: $ZodIssueBase) => issue.message) // extract message from each issue
+            .join('. '); // join them into a single string
+          throw new Error(errorMessages);
         }
-        throw new Error(errorData.message || 'An unknown error occurred.');
+
+        throw new Error(data.message || 'An unknown error occurred.');
       }
       return response.json();
     });
@@ -120,7 +124,9 @@ const ComposeEmail = ({ onEmailSent }: ComposeEmailProps) => {
         onEmailSent();
         return 'Email sent successfully!';
       },
-      error: (err) => `Error: ${err.message}`,
+      error: (err) => {
+        return err.message || 'An unknown validation error occurred.';
+      },
     });
   };
 

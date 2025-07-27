@@ -23,3 +23,10 @@ export interface TrackedEmail {
     opens: number;
   };
 }
+
+export interface $ZodIssueBase {
+  readonly code?: string;
+  readonly input?: unknown;
+  readonly path: PropertyKey[];
+  readonly message: string;
+}
